@@ -4,11 +4,13 @@ import "./globals.css";
 import "easymde/dist/easymde.min.css";
 import Sidebar from "@/components/Sidebar";
 import UserItem from "@/components/UserItem";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
 import {
 	ResizableHandle,
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+
 			<body className={inter.className}>
+			  <NextThemeProvider attribute="class" defaultTheme="light" enableSystem>
 				<ResizablePanelGroup
 					direction="horizontal"
 					className="min-h-[900px] h-screen w-full rounded-lg border"
@@ -34,12 +38,17 @@ export default function RootLayout({
 					</ResizablePanel>
 					<ResizableHandle withHandle />
 					<ResizablePanel defaultSize={75}>
-						<div className="flex flex-col h-full justify-center p-6">
-							{children}
-						</div>
+					<main className="flex-grow">
+          <Header />
+					<div className="p-4">
+          {children}
+					</div>
+        </main>
 					</ResizablePanel>
 				</ResizablePanelGroup>
+			</NextThemeProvider>
 			</body>
+
 		</html>
 	);
 }

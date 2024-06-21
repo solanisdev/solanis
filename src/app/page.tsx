@@ -1,43 +1,5 @@
-"use client"
+import Editor from "@/components/Editor";
 
-import { useState } from "react";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
-import Sidebar from "@/components/Sidebar";
-import UserItem from "@/components/UserItem";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
-
-export default function ResizableDemo() {
-  const [markdown, setMarkdown] = useState("## Your Markdown content here");
-
-  return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className="min-h-[900px] h-screen w-full rounded-lg border"
-    >
-      <ResizablePanel defaultSize={25}>
-        {/* <div className="flex h-full items-center justify-center p-6">
-          <span className="font-semibold">Sidebar</span>
-        </div> */}
-        <UserItem />
-        <Sidebar />
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={75}>
-        <div className="flex h-full items-center justify-center p-6">
-          <div className="w-full h-full">
-            <SimpleMDE
-              value={markdown}
-              onChange={setMarkdown}
-              options={{ minHeight: '100%' }}
-            />
-          </div>
-        </div>
-      </ResizablePanel>
-    </ResizablePanelGroup>
-  );
+export default function Home() {
+	return <Editor />;
 }

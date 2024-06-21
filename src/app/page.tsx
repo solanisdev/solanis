@@ -3,6 +3,8 @@
 import { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import Sidebar from "@/components/Sidebar";
+import UserItem from "@/components/UserItem";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -18,9 +20,11 @@ export default function ResizableDemo() {
       className="min-h-[900px] h-screen w-full rounded-lg border"
     >
       <ResizablePanel defaultSize={25}>
-        <div className="flex h-full items-center justify-center p-6">
+        {/* <div className="flex h-full items-center justify-center p-6">
           <span className="font-semibold">Sidebar</span>
-        </div>
+        </div> */}
+        <UserItem />
+        <Sidebar />
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel defaultSize={75}>

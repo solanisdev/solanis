@@ -17,7 +17,6 @@ import {
 	Edit,
 	Book,
 } from "lucide-react";
-import Link from "next/link";
 import React, { useState } from "react";
 import Graph from "react-graph-vis";
 
@@ -85,7 +84,13 @@ const graphOptions = {
 	edges: {
 		color: "#000000",
 	},
-	height: "100px",
+	nodes: {
+		color: {
+			background: "#ffc800", 
+			border: "#ffc800", 
+		},
+	},
+	height: "300px",
 	width: "100%",
 };
 

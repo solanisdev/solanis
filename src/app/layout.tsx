@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "easymde/dist/easymde.min.css";
 import Sidebar from "@/components/Sidebar";
-import UserItem from "@/components/UserItem";
+import Logo from "@/components/Logo";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import {
 	ResizableHandle,
@@ -33,7 +33,7 @@ export default function RootLayout({
 					className="min-h-[900px] h-screen w-full rounded-lg border"
 				>
 					<ResizablePanel defaultSize={25} minSize={20}>
-						<UserItem />
+						<Logo />
 						<Sidebar />
 					</ResizablePanel>
 					<ResizableHandle withHandle />

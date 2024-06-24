@@ -1,21 +1,19 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import Logo from "@/components/Logo";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import Header from "@/components/Header";
+
 import { ThemeProvider } from "@/contexts/theme-provider";
-import { EditorProvider } from "@/contexts/editor-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 const inter = Inter({ subsets: ["latin"] });
+const helvetica_neue = localFont({
+  src: "./HelveticaNeue.woff2",
+  display: "swap",
+  variable: "--font-helvetica-neue",
+});
 
 export const metadata: Metadata = {
-  title: "Solanis",
+  title: "Solanis - Escrita inteligente",
   description: "Solanis é um app de escrita e resumo de alto desempenho.",
 };
 
@@ -26,28 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${helvetica_neue.variable} ${inter.className} h-screen`}
+      >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <TooltipProvider>
-            <EditorProvider>
-              <ResizablePanelGroup
-                direction="horizontal"
-                className="min-h-[900px] h-screen w-full rounded-lg border"
-              >
-                <ResizablePanel defaultSize={25} minSize={20}>
-                  <Logo />
-                  <Sidebar />
-                </ResizablePanel>
-                <ResizableHandle withHandle />
-                <ResizablePanel defaultSize={75}>
-                  <main className="flex-grow">
-                    <Header />
-                    <div className="p-4">{children}</div>
-                  </main>
-                </ResizablePanel>
-              </ResizablePanelGroup>
-            </EditorProvider>
-          </TooltipProvider>
+          <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

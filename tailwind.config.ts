@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -75,9 +76,26 @@ const config = {
       fontFamily: {
         helv: ["var(--font-helvetica-neue)"],
       },
+      textShadow: {
+        sm: "0 0 14px rgb(0 0 0 / 20%)",
+        DEFAULT: "0 0 18px rgb(0 0 0 / 20%)",
+        lg: "0 0 22px rgb(0 0 0 / 20%)",
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({ matchUtilities, theme }: any) {
+      matchUtilities(
+        {
+          "text-shadow": (value: any) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") },
+      );
+    } as any),
+  ],
 } satisfies Config;
 
 export default config;

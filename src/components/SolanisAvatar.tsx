@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import SolanisTransparent from "../../public/solanis-transparent.svg";
+import SolanisTransparent from "../../public/solanis-transparent.png";
 
 interface SolanisAvatarProps {
   hasBorder?: boolean;
@@ -23,6 +23,7 @@ export default function SolanisAvatar({
       className={`flex items-center gap-2 p-2 rounded-[16-px] ${hasBorder && "border"}`}
     >
       <Image
+        priority
         src={SolanisTransparent}
         alt="avatar"
         className={`avatar rounded-full ${sizeClass[size]}`}

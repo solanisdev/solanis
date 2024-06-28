@@ -32,9 +32,23 @@ import {
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
-import { useCallback, useContext, useEffect, useRef } from "react";
+import {
+  use,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { EditorContext, EditorProvider } from "@/contexts/editor-provider";
 import { useInView } from "framer-motion";
+import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const DEMO_MARKDOWN = `# Otimizando Seus Estudos com o App Solanis
 
@@ -81,22 +95,12 @@ Com dedicação e disciplina, o App Solanis pode ser um aliado valioso na sua jo
 `;
 
 export default function Home() {
+  const [isHovered, setIsHovered] = useState(false);
   const nodeRef = useRef(null);
 
-  const { titleRef } = useContext(EditorContext);
+  const macRef = useRef(null);
 
-  const isInEditorInView = useInView(nodeRef);
-
-  const titleRefCallback = useCallback(() => {
-    return titleRef?.current;
-  }, [titleRef]);
-
-  useEffect(() => {
-    if (isInEditorInView) {
-      if (titleRef?.current) {
-      }
-    }
-  }, [isInEditorInView, titleRefCallback]);
+  const isMacInView = useInView(macRef, { once: true });
 
   return (
     <>
@@ -105,9 +109,15 @@ export default function Home() {
           <header className="px-4 flex items-center justify-between py-4">
             <SolanisAvatar hasBorder={false} size="LG" />
             <div className="flex gap-6">
-              <Link href={"/download"} className="font-extralight border-b">BAIXAR</Link>
-              <Link href={"/features"} className="font-extralight border-b">DESCOBRIR</Link>
-              <Link href={"/features"} className="font-extralight border-b">SUPORTE</Link>
+              <Link href={"/download"} className="font-extralight border-b">
+                BAIXAR
+              </Link>
+              <Link href={"/features"} className="font-extralight border-b">
+                DESCOBRIR
+              </Link>
+              <Link href={"/features"} className="font-extralight border-b">
+                SUPORTE
+              </Link>
             </div>
             <Link href={"/solanized/gustavorteuber"}>
               <Button
@@ -117,41 +127,47 @@ export default function Home() {
                 solanize-se <Flower2 strokeWidth={0.5} />
               </Button>
             </Link>
-          </header> 
+          </header>
           <main className="max-w-screen-xl pt-8 pb-8 lg:pt-14">
             <div className="flex flex-col">
               <div className="px-4 flex flex-col items-center gap-12">
-                <h2 className="font-helv text-8xl mb-4 font-bold leading-[0.8] text-center tracking-tight">
-                  Revolucionando a Escrita
-                </h2>
-                <p className="text-center max-w-3xl text-2xl font-extralight">
-                  Solanis é um gerador de markdown de última geração, projetado
-                  para criar markdowns com eficiência. <br /> <br />
-                  Alimentado pela Solanis IA v1.0, esta ferramenta utiliza
-                  recursos avançados de processamento de linguagem natural para
-                  gerar documentos markdown de alta qualidade e bem
-                  estruturados, sem esforço.
-                  <br />
-                </p>
-                <p className="text-6xl font-thin leading-none tracking-tight">
-                  Escreva
-                  <TypeAnimation
-                    sequence={[
-                      " com eficiência.",
-                      1000,
-                      " simples.",
-                      1000,
-                      " com solanis.",
-                    ]}
-                    wrapper="span"
-                    cursor={true}
-                    repeat={0}
-                  />
-                </p>
-                <div>
+                <div className="flex flex-col items-center gap-12 mb-32">
+                  <h2 className="font-helv text-8xl mb-4 font-bold leading-[0.8] text-center tracking-tight">
+                    Revolucionando a Escrita
+                  </h2>
+                  <p className="text-center max-w-3xl text-2xl font-extralight">
+                    Solanis é um gerador de markdown de última geração,
+                    projetado para criar markdowns com eficiência. <br /> <br />
+                    Alimentado pela Solanis IA v1.0, esta ferramenta utiliza
+                    recursos avançados de processamento de linguagem natural
+                    para gerar documentos markdown de alta qualidade e bem
+                    estruturados, sem esforço.
+                    <br />
+                  </p>
+                  <p className="text-6xl font-thin leading-none tracking-tight">
+                    Escreva
+                    <TypeAnimation
+                      sequence={[
+                        " com eficiência.",
+                        1000,
+                        " simples.",
+                        1000,
+                        " com solanis.",
+                      ]}
+                      wrapper="span"
+                      cursor={true}
+                      repeat={0}
+                    />
+                  </p>
                   <Button variant={"outline"}>Solanize-se agora</Button>
                 </div>
-                <div className="w-full relative">
+                <div
+                  className={cn(
+                    isMacInView ? "opacity-100" : "opacity-50",
+                    "w-full relative hidden lg:block",
+                  )}
+                  ref={macRef}
+                >
                   <div className="w-full h-[836px] border bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg shadow-md">
                     <div
                       id="menu-bar"
@@ -229,34 +245,78 @@ export default function Home() {
                     </Draggable>
                     <div
                       id="dock"
-                      className="h-auto absolute w-auto left-1/2 bottom-2 -translate-x-1/2 backdrop-blur-lg bg-black flex flex-row items-center gap-2 bg-opacity-30 rounded-2xl p-1"
+                      className={cn(
+                        isHovered ? "w-full" : "w-auto",
+                        "h-auto absolute w-auto left-1/2 bottom-2 -translate-x-1/2 backdrop-blur-lg bg-black flex flex-row items-center gap-2 bg-opacity-30 rounded-2xl p-1",
+                      )}
                     >
-                      <div className="h-14">
-                        <Image
-                          className="h-14 w-14"
-                          src={Finder}
-                          alt="Finder Icon"
-                        />
-                      </div>
-                      <div className="h-14">
-                        <Image
-                          className="h-14 w-14 p-[2px]"
-                          height={512}
-                          width={512}
-                          src={SolanisIconPNG}
-                          alt="Solanis Icon"
-                        />
-                      </div>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild>
+                          <div className="h-14">
+                            <Image
+                              className="h-14 w-14 hover:transform hover:scale-110 hover:-translate-y-1 transition-all"
+                              src={Finder}
+                              alt="Finder Icon"
+                              onMouseOver={() => setIsHovered(true)}
+                              onMouseLeave={() => setIsHovered(false)}
+                            />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent
+                          className="border-0 bg-slate-700 -z-10"
+                          collisionPadding={10}
+                        >
+                          <TooltipArrow className="fill-slate-700" />
+                          <p className="text-sm text-white opacity-100">
+                            Finder
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild>
+                          <div className="h-14">
+                            <Image
+                              className="h-14 w-14 p-[2px] hover:transform hover:scale-110 hover:-translate-y-1 transition-all"
+                              height={512}
+                              width={512}
+                              src={SolanisIconPNG}
+                              alt="Solanis Icon"
+                            />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent
+                          className="border-0 bg-slate-700 -z-10"
+                          collisionPadding={10}
+                        >
+                          <TooltipArrow className="fill-slate-700" />
+                          <p className="text-sm text-white opacity-100">
+                            Solanis
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
                       <div className="w-[1px] bg-white opacity-40 h-12"></div>
-                      <div className="h-14">
-                        <Image
-                          className="h-14 w-14 p-[2px]"
-                          height={512}
-                          width={512}
-                          src={Trash}
-                          alt="Trash Icon"
-                        />
-                      </div>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild>
+                          <div className="h-14">
+                            <Image
+                              className="h-14 w-14 p-[2px] hover:transform hover:scale-110 hover:-translate-y-1 transition-all"
+                              height={512}
+                              width={512}
+                              src={Trash}
+                              alt="Trash Icon"
+                            />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent
+                          className="border-0 bg-slate-700 -z-10"
+                          collisionPadding={10}
+                        >
+                          <TooltipArrow className="fill-slate-700" />
+                          <p className="text-sm text-white opacity-100">
+                            Trash
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
                     </div>
                   </div>
                 </div>

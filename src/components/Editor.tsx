@@ -38,7 +38,7 @@ export default function Editor({ isDemo = false }: { isDemo?: boolean }) {
         <ChevronRight className="mr-2 h-4 w-4" />
       </Button>
       <div
-        className="mb-[10px] flex w-full items-center gap-2 bg-bg-000 border border-border-200 p-3 leading-5
+        className="mb-[10px] flex w-full items-center gap-2 border border-border-200 p-3 leading-5
         rounded-lg transition-colors hover:border-border-100 placeholder:text-text-500 focus:border-accent-secondary-100
         focus:ring-0 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 whitespace-pre-wrap resize-none
         row-start-1 row-end-2 col-start-1 col-end-2 bg-transparent tracking-tight pt-8 overflow-hidden"

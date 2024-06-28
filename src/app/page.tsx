@@ -13,29 +13,103 @@ import {
   Wifi,
   BatteryCharging,
   Bluetooth,
+  X,
+  Minus,
+  Maximize2,
 } from "lucide-react";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import Finder from "../../public/finder-icon.png";
 import SolanisIconPNG from "../../public/icon-mac.png";
 import Trash from "../../public/trashempty.png";
-import Apple from "../../public/apple.svg";
 import Draggable from "react-draggable";
 import Link from "next/link";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
+import Editor from "@/components/Editor";
+import { useCallback, useContext, useEffect, useRef } from "react";
+import { EditorContext, EditorProvider } from "@/contexts/editor-provider";
+import { useInView } from "framer-motion";
+
+const DEMO_MARKDOWN = `# Otimizando Seus Estudos com o App Solanis
+
+O App Solanis oferece diversas ferramentas e recursos para aprimorar seus estudos e te auxiliar na jornada do aprendizado. Para te ajudar a aproveitar ao máximo o potencial do aplicativo, preparamos este guia detalhado com dicas e sugestões práticas:
+
+### 1. Criação de Resumos Eficazes
+
+Organize suas ideias: Utilize a ferramenta de criação de listas para estruturar seus resumos de forma clara e concisa.
+Destaque os pontos-chave: Negrite, sublinhe ou utilize cores para destacar as informações mais importantes do texto.
+Insira imagens e diagramas: Visualize conceitos complexos com imagens e diagramas para facilitar a assimilação do conteúdo.
+Crie links para materiais complementares: Enriquecer seus resumos com links para outros recursos, como artigos, vídeos ou apresentações.
+
+### 2. Revisão Ativa e Eficaz
+
+Transforme textos em flashcards: Crie flashcards com perguntas e respostas a partir dos seus resumos para facilitar a revisão.
+Utilize o modo de teste: Teste seus conhecimentos com o modo de perguntas e respostas, otimizando sua memorização.
+Compartilhe seus resumos: Compartilhe seus resumos com colegas de estudo para promover debates e troca de conhecimentos.
+
+### 3. Planejamento e Organização
+
+Crie um cronograma de estudos: Utilize a ferramenta de calendário para organizar seus estudos e definir metas de aprendizado.
+Defina prazos e lembrete: Configure lembretes para te ajudar a cumprir seu cronograma e evitar atrasos.
+Acompanhe seu progresso: Monitore seu progresso visualmente usando gráficos e estatísticas.
+
+### 4. Aprendizagem Colaborativa
+
+Participe de grupos de estudo: Crie ou participe de grupos de estudo dentro do aplicativo para discutir conteúdos e trocar ideias.
+Compartilhe seus flashcards: Compartilhe seus flashcards com colegas para que todos possam se beneficiar do seu material de estudo.
+Ajude outros alunos: Responda perguntas e forneça feedback aos seus colegas, contribuindo para o aprendizado mútuo.
+
+### 5. Personalização e Flexibilidade
+
+Adapte a interface: Personalize a interface do aplicativo de acordo com suas preferências visuais e necessidades.
+Utilize diferentes modos de visualização: Explore os diferentes modos de visualização para encontrar o que melhor se adapta ao seu estilo de aprendizado.
+Sincronize seus dados: Sincronize seus dados entre diferentes dispositivos para ter acesso aos seus estudos em qualquer lugar.
+Lembre-se: O App Solanis é uma ferramenta poderosa que pode te auxiliar a otimizar seus estudos e alcançar seus objetivos de aprendizado. Explore todas as funcionalidades do aplicativo, personalize-o de acordo com suas necessidades e aproveite ao máximo o potencial que ele oferece para transformar sua jornada de estudos.
+
+Dicas Extras:
+
+Combine o App Solanis com outras ferramentas de estudo: Utilize outros recursos, como livros, vídeos e aulas online, para complementar seus estudos e ter uma visão mais abrangente do conteúdo.
+Crie um ambiente de estudo propício: Encontre um local tranquilo e livre de distrações para estudar com foco e concentração.
+Mantenha uma rotina de estudos consistente: Estude com regularidade e defina metas realistas para alcançar o sucesso.
+Com dedicação e disciplina, o App Solanis pode ser um aliado valioso na sua jornada de aprendizado. Utilize-o com sabedoria e aproveite ao máximo os recursos que ele oferece para alcançar seus objetivos de estudo!
+`;
 
 export default function Home() {
+  const nodeRef = useRef(null);
+
+  const { titleRef } = useContext(EditorContext);
+
+  const isInEditorInView = useInView(nodeRef);
+
+  const titleRefCallback = useCallback(() => {
+    return titleRef?.current;
+  }, [titleRef]);
+
+  useEffect(() => {
+    if (isInEditorInView) {
+      if (titleRef?.current) {
+      }
+    }
+  }, [isInEditorInView, titleRefCallback]);
+
   return (
     <>
       <div className="max-w-7xl mx-auto flex flex-col min-h-screen">
-        <div className="px-4 flex flex-col flex-grow">
-          <header className="flex items-center justify-between py-4">
+        <div className="flex flex-col flex-grow">
+          <header className="px-4 flex items-center justify-between py-4">
             <SolanisAvatar hasBorder={false} size="LG" />
             <div className="flex gap-6">
-              <span className="font-extralight border-b">O QUE</span>
-              <span className="font-extralight border-b">COMO</span>
-              <span className="font-extralight border-b">PREÇOS</span>
+              <Link href={"/download"} className="font-extralight border-b">BAIXAR</Link>
+              <Link href={"/features"} className="font-extralight border-b">DESCOBRIR</Link>
+              <Link href={"/features"} className="font-extralight border-b">SUPORTE</Link>
             </div>
-            <Link href={"/user/gustavorteuber"}>
+            <Link href={"/solanized/gustavorteuber"}>
               <Button
                 variant="ghost"
                 className="flex justify-center gap-2 font-thin"
@@ -43,10 +117,10 @@ export default function Home() {
                 solanize-se <Flower2 strokeWidth={0.5} />
               </Button>
             </Link>
-          </header>
+          </header> 
           <main className="max-w-screen-xl pt-8 pb-8 lg:pt-14">
             <div className="flex flex-col">
-              <div className="flex flex-col items-center gap-12">
+              <div className="px-4 flex flex-col items-center gap-12">
                 <h2 className="font-helv text-8xl mb-4 font-bold leading-[0.8] text-center tracking-tight">
                   Revolucionando a Escrita
                 </h2>
@@ -81,22 +155,8 @@ export default function Home() {
                   <div className="w-full h-[836px] border bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg shadow-md">
                     <div
                       id="menu-bar"
-                      className="flex flex-row justify-between px-3 py-1 backdrop-blur-lg bg-white bg-opacity-20 text-white select-none z-10"
+                      className="flex absolute right-3 top-3 flex-row rounded-lg justify-between px-3 py-1 backdrop-blur-lg bg-white bg-opacity-20 text-white select-none z-10"
                     >
-                      <div className="flex flex-row items-center gap-4">
-                        <Image
-                          className="h-4 w-4"
-                          src={Apple}
-                          alt="Apple Icon"
-                        />
-                        <span className="text-sm font-bold">Solanis</span>
-                        <span className="text-sm">File</span>
-                        <span className="text-sm">Edit</span>
-                        <span className="text-sm">View</span>
-                        <span className="text-sm">Tabs</span>
-                        <span className="text-sm">Window</span>
-                        <span className="text-sm">Help</span>
-                      </div>
                       <div className="flex flex-row items-center gap-3">
                         <Bluetooth size={16} />
                         <span className="flex flex-row text-xs gap-2 items-center">
@@ -111,10 +171,60 @@ export default function Home() {
                       axis="both"
                       bounds="parent"
                       handle=".drag-handler"
-                      defaultPosition={{ x: 180, y: 50 }}
+                      defaultPosition={{ x: 60, y: 50 }}
+                      nodeRef={nodeRef}
                     >
-                      <div className="w-9/12 h-3/4 ">
-                        <div className=" p-2 min-h-2 drag-handler"></div>
+                      <div
+                        className="w-10/12 h-3/4 rounded-lg bg-white"
+                        ref={nodeRef}
+                      >
+                        <div className="p-3 min-h-2 rounded-t-lg drag-handler bg-gray-400">
+                          <div className="flex flex-row items-center gap-2">
+                            <div className="rounded-full bg-red-400 w-3 h-3 flex justify-center items-center">
+                              <X
+                                size={8}
+                                strokeWidth={4}
+                                className="opacity-40"
+                              />
+                            </div>
+                            <div className="rounded-full bg-yellow-400 w-3 h-3 flex justify-center items-center">
+                              <Minus
+                                size={10}
+                                strokeWidth={4}
+                                className="opacity-40"
+                              />
+                            </div>
+                            <div className="rounded-full bg-green-400 w-3 h-3 flex justify-center items-center">
+                              <Maximize2
+                                size={6}
+                                strokeWidth={4}
+                                className="opacity-40 rotate-90"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="h-[94%]">
+                          <EditorProvider>
+                            <ResizablePanelGroup
+                              direction="horizontal"
+                              className="w-full rounded-lg border"
+                            >
+                              <ResizablePanel defaultSize={25} minSize={20}>
+                                <SolanisAvatar />
+                                <Sidebar />
+                              </ResizablePanel>
+                              <ResizableHandle withHandle />
+                              <ResizablePanel defaultSize={75}>
+                                <main className="flex-grow">
+                                  <Header />
+                                  <div className="p-4">
+                                    <Editor />
+                                  </div>
+                                </main>
+                              </ResizablePanel>
+                            </ResizablePanelGroup>
+                          </EditorProvider>
+                        </div>
                       </div>
                     </Draggable>
                     <div
@@ -149,10 +259,9 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full absolute"></div>
                 </div>
               </div>
-              <section className="mx-auto flex flex-col w-full max-w-[120rem] gap-24 py-24">
+              <section className="px-4 mx-auto flex flex-col w-full max-w-[120rem] gap-24 py-24">
                 <div className="flex flex-row">
                   <div className="flex flex-col flex-grow-0 flex-shrink-0 basis-4/12 items-center p-4">
                     <span className="padding-8 mb-4 flex h-32 w-32 items-center justify-center rounded-[1.8rem] border border-[#151515]">
@@ -225,6 +334,34 @@ export default function Home() {
               </section>
             </div>
           </main>
+          <footer className="pt-28 pb-20 border-t">
+            <div className="flex flex-col justify-center gap-16 px-4">
+              <p className="text-7xl text-500 font-thin">
+                Domine seus estudos.
+              </p>
+              <div className="flex flex-row items-center gap-4">
+                <p className="text-sm font-thin w-full">© Solanis Team</p>
+                <div className="flex gap-4">
+                  <a
+                    href="https://github.com/solanisdev/solanis"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-thin hover:text-gray-600 text-sm"
+                  >
+                    Github
+                  </a>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-thin hover:text-gray-600 text-sm"
+                  >
+                    Discord
+                  </a>
+                </div>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
     </>

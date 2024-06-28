@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, RefObject, createContext, useEffect, useRef, useState } from "react";
+import { Dispatch, RefObject, createContext, useRef, useState } from "react";
 import { EditorChange } from "codemirror";
 
 interface EditorContextProps {
@@ -35,7 +35,6 @@ const EditorProvider = ({ children }: EditorProviderProps) => {
       setLastTitleSaved(titleRef.current.value);
     }
   };
-
 
   return (
     <EditorContext.Provider

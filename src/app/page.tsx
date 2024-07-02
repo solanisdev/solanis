@@ -32,17 +32,8 @@ import {
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
-import {
-  use,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { EditorContext, EditorProvider } from "@/contexts/editor-provider";
-import { useInView } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { useRef } from "react";
+import { EditorProvider } from "@/contexts/editor-provider";
 import {
   Tooltip,
   TooltipArrow,
@@ -95,12 +86,8 @@ Com dedicação e disciplina, o App Solanis pode ser um aliado valioso na sua jo
 `;
 
 export default function Home() {
-  const [isHovered, setIsHovered] = useState(false);
   const nodeRef = useRef(null);
-
-  const macRef = useRef(null);
-
-  const isMacInView = useInView(macRef, { once: true });
+  const username = "gustavorteuber";
 
   return (
     <>
@@ -119,7 +106,7 @@ export default function Home() {
                 SUPORTE
               </Link>
             </div>
-            <Link href={"/solanized/gustavorteuber"}>
+            <Link href={`/solanized/${username}`}>
               <Button
                 variant="ghost"
                 className="flex justify-center gap-2 font-thin"
@@ -161,13 +148,7 @@ export default function Home() {
                   </p>
                   <Button variant={"outline"}>Solanize-se agora</Button>
                 </div>
-                <div
-                  className={cn(
-                    isMacInView ? "opacity-100" : "opacity-50",
-                    "w-full relative hidden lg:block",
-                  )}
-                  ref={macRef}
-                >
+                <div className="w-full relative hidden lg:block">
                   <div className="w-full h-[836px] border bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg shadow-md">
                     <div
                       id="menu-bar"
@@ -234,7 +215,7 @@ export default function Home() {
                                 <main className="flex-grow">
                                   <Header />
                                   <div className="p-4">
-                                    <Editor />
+                                    <Editor isDemo={true} />
                                   </div>
                                 </main>
                               </ResizablePanel>
@@ -245,10 +226,7 @@ export default function Home() {
                     </Draggable>
                     <div
                       id="dock"
-                      className={cn(
-                        isHovered ? "w-full" : "w-auto",
-                        "h-auto absolute w-auto left-1/2 bottom-2 -translate-x-1/2 backdrop-blur-lg bg-black flex flex-row items-center gap-2 bg-opacity-30 rounded-2xl p-1",
-                      )}
+                      className="h-auto absolute w-auto left-1/2 bottom-2 -translate-x-1/2 backdrop-blur-lg bg-black flex flex-row items-center gap-2 bg-opacity-30 rounded-2xl p-1"
                     >
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
@@ -257,8 +235,6 @@ export default function Home() {
                               className="h-14 w-14 hover:transform hover:scale-110 hover:-translate-y-1 transition-all"
                               src={Finder}
                               alt="Finder Icon"
-                              onMouseOver={() => setIsHovered(true)}
-                              onMouseLeave={() => setIsHovered(false)}
                             />
                           </div>
                         </TooltipTrigger>

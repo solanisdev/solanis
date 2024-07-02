@@ -6,36 +6,36 @@ import {
   LucideMessageSquareText,
   PlusIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import "gridstack/dist/gridstack.css";
-import { GridStack } from "gridstack";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+import GridLayout from "react-grid-layout";
 
 type Props = {};
 
 export default function Dashboard({}: Props) {
   const name = "Gustavo";
-  const [grid, setGrid] = useState<GridStack | null>(null);
-
-  useEffect(() => {
-    setGrid(
-      GridStack.init({
-        alwaysShowResizeHandle: true,
-        cellHeight: 70,
-        disableDrag: false,
-        draggable: {
-          handle: ".grid-stack-item-content",
-        },
-        float: true,
-        margin: 1,
-      }),
-    );
+  const notes = useMemo(() => {
+    return Array.from({ length: 10 }).map((_, i) => (
+      <div key={i}>{i}</div>
+    ));
   }, []);
+  const layout = useMemo(() => {
+    return notes.map((_, i) => ({
+      i: i.toString(),
+      x: i,
+      y: 1,
+      w: 1,
+      h: 1,
+    }));
+  }, []);
+
 
   return (
     <div>
@@ -60,14 +60,16 @@ export default function Dashboard({}: Props) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="grid-stack">
-        <div
-          className="grid-stack-item border border-gray-200 rounded-md"
-          data-gs-width="4"
-          data-gs-height="4"
+      <div className="p-4">
+        <GridLayout
+          className="layout"
+          layout={layout}
+          cols={12}
+          rowHeight={30}
+          width={800}
         >
-          <div className="grid-stack-item-content p-2">Item 1</div>
-        </div>
+          {notes}
+        </GridLayout>
       </div>
     </div>
   );

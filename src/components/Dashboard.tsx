@@ -5,6 +5,7 @@ import {
   LucideFileText,
   LucideMessageSquareText,
   LucideTrash,
+  Plus,
   PlusIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -28,7 +29,11 @@ type Widget = {
   w: number;
   minW: number;
   minH: number;
+  maxH: number;
+  static?: boolean;
 };
+
+const layouts = ["lg", "md", "sm", "xs", "xxs"];
 
 //TODO: Implement the rest of the widgets
 //TODO: Switch to components for each widget to make it easier to add new ones and calling api's
@@ -38,26 +43,54 @@ export default function Dashboard({}: Props) {
   const [widgets, setWidgets] = useState<Widget[]>([
     {
       id: 1,
-      title: "Notas Recentes",
-      type: "note",
-      h: 4,
-      w: 4,
+      title: "",
+      type: "empty",
+      h: 11,
+      w: 6,
       minW: 2,
       minH: 2,
+      maxH: 22,
+      static: true,
     },
     {
       id: 2,
-      title: "Resumos Recentes",
-      type: "summary",
-      h: 4,
-      w: 4,
+      title: "",
+      type: "empty",
+      h: 11,
+      w: 6,
       minW: 2,
       minH: 2,
+      maxH: 22,
+      static: true,
+    },
+    {
+      id: 3,
+      title: "",
+      type: "empty",
+      h: 11,
+      w: 6,
+      minW: 2,
+      minH: 2,
+      maxH: 22,
+      static: true,
+    },
+    {
+      id: 4,
+      title: "",
+      type: "empty",
+      h: 11,
+      w: 6,
+      minW: 2,
+      minH: 2,
+      maxH: 22,
+      static: true,
     },
   ]);
 
-  const ResponsiveReactGridLayout = useMemo(() => WidthProvider(Responsive), []);
-
+  const ResponsiveReactGridLayout = useMemo(
+    () => WidthProvider(Responsive),
+    [],
+  );
 
   const addWidget = useCallback(
     (widget: Widget) => {
@@ -85,10 +118,10 @@ export default function Dashboard({}: Props) {
   const NoteWidget = useCallback(({ widget }: { widget: Widget }) => {
     return (
       <div className="flex flex-row gap-2 items-center">
-        <div className="flex-1 text-sm font-bold">{widget.title}</div>
         <Button variant={"outline"} className="h-min p-2">
           <LucideFileText size={14} />
         </Button>
+        <div className="flex-1 text-sm font-bold">{widget.title}</div>
       </div>
     );
   }, []);
@@ -96,12 +129,22 @@ export default function Dashboard({}: Props) {
   const SummaryWidget = useCallback(({ widget }: { widget: Widget }) => {
     return (
       <div className="flex flex-row gap-2 items-center">
+        <Button variant={"outline"} className="h-min p-2">
+          <LucideMessageSquareText size={14} />
+        </Button>
+        <div className="flex-1 text-sm font-bold">{widget.title}</div>
         <Button variant="destructive" className="h-min p-2">
           <LucideTrash size={14} />
         </Button>
-        <div className="flex-1 text-sm font-bold">{widget.title}</div>
-        <Button variant={"outline"} className="h-min p-2">
-          <LucideMessageSquareText size={14} />
+      </div>
+    );
+  }, []);
+
+  const EditWidget = useCallback(() => {
+    return (
+      <div className="flex flex-row gap-2 items-center justify-center h-full">
+        <Button variant="outline" className="h-min p-2">
+          <Plus size={14} />
         </Button>
       </div>
     );
@@ -113,6 +156,8 @@ export default function Dashboard({}: Props) {
         return <NoteWidget key={widget.id} widget={widget} />;
       case "summary":
         return <SummaryWidget key={widget.id} widget={widget} />;
+      case "empty":
+        return <EditWidget key={widget.id} />;
       default:
         return <div key={widget.id}></div>;
     }
@@ -120,18 +165,17 @@ export default function Dashboard({}: Props) {
 
   const htmlWidget = useCallback((widget: Widget, i: number) => {
     const x = i > 0 ? widgets[i - 1].w : 0;
+    const dataGrid = {
+      x: x,
+      y: 0,
+      ...widget,
+    };
+
     return (
       <div
         key={widget.id}
-        data-grid={{
-          x: x,
-          y: 0,
-          w: widget.w,
-          h: widget.h,
-          minW: widget.minW,
-          minH: widget.minH,
-        }}
-        className="border border-black rounded-lg p-2"
+        data-grid={dataGrid}
+        className="bg-white border border-black rounded-lg p-2"
       >
         {chooseWidget(widget)}
       </div>
@@ -143,9 +187,9 @@ export default function Dashboard({}: Props) {
   }, [widgets]);
 
   return (
-    <div>
-      <div className="flex flex-row items-center justify-between border-b border-gray-200 pb-4">
-        <p className="">
+    <>
+      <div className="flex flex-row items-center justify-between pb-4">
+        <p>
           Bem vindo, <span className="font-bold">{name}</span> ao seu Dashboard!
         </p>
         <DropdownMenu>
@@ -164,17 +208,18 @@ export default function Dashboard({}: Props) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="p-4">
+      <div className="p-4 border border-gray-100 rounded-lg">
         <ResponsiveReactGridLayout
           className="layout"
-          rowHeight={30}
+          maxRows={22}
+          rowHeight={11}
           width={1200}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 12, md: 10, sm: 8, xs: 4, xxs: 2 }}
+          cols={{ lg: 12, md: 12, sm: 12, xs: 6, xxs: 2 }}
         >
           {htmlWidgets}
         </ResponsiveReactGridLayout>
       </div>
-    </div>
+    </>
   );
 }

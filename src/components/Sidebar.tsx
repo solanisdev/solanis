@@ -22,6 +22,8 @@ import React, { useCallback, useState } from "react";
 import { usePathname } from "next/navigation";
 import Graph from "react-graph-vis";
 import { cn } from "@/lib/utils";
+import { atom, useAtom } from "jotai";
+import ModalCreateSummary from "@/components/ModalCreateSummary";
 
 type MenuItem = {
   text: string;
@@ -116,57 +118,85 @@ export const graphData = {
   ],
 };
 
-interface SidebarProps {
+type SidebarProps = {
   params?: { username: string };
-}
+};
 
 export default function Sidebar({ params }: SidebarProps) {
   const [graphEvents] = useState({});
   const username = params?.username;
+  const realPathname = usePathname();
+
   const pathname = useCallback(() => {
-    const pathName = usePathname();
     if (params && params.username) {
-      return pathName.replace(`/solanized/${params.username}`, "");
+      return realPathname.replace(`/solanized/${params.username}`, "");
     }
-    return pathName;
+    return realPathname;
   }, []);
 
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <Command>
-      <CommandList>
-        {menuList.map((menu, key) => (
-          <CommandGroup key={key} heading={menu.group}>
-            {menu.items.map((option, optionKey) => (
-              <Link
-                href={params ? `/solanized/${username}${option.link}` : "#"}
-                key={optionKey}
-              >
-                <CommandItem
-                  className={cn(
-                    "flex gap-2 cursor-pointer",
-                    pathname() === option.link &&
-                      "border border-violet-500 bg-accent",
-                  )}
-                  key={optionKey}
-                >
-                  {renderIcon(option.icon)}
-                  {option.text}
-                </CommandItem>
-              </Link>
-            ))}
-          </CommandGroup>
-        ))}
-      </CommandList>
-      <CommandSeparator />
-      <div className="p-2">
-        <div className="p-6 border border-gray-300 rounded-lg bg-gray-100 mt-4">
-          <Graph
-            graph={graphData}
-            options={graphOptions}
-            events={graphEvents}
-          />
+    <>
+      <Command>
+        <CommandList>
+          {menuList.map((menu, key) => (
+            <CommandGroup key={key} heading={menu.group}>
+              {menu.items.map((option, optionKey) =>
+                option.link === "/create-summary" ? (
+                  <button
+                    onClick={() => {
+                      console.log("click");
+                      setOpen(true);
+                    }}
+                    className="w-full"
+                  >
+                    <CommandItem
+                      className={cn(
+                        "flex gap-2 cursor-pointer",
+                        pathname() === option.link &&
+                          "border border-violet-500 bg-accent",
+                      )}
+                      key={optionKey}
+                    >
+                      {renderIcon(option.icon)}
+                      {option.text}
+                    </CommandItem>
+                  </button>
+                ) : (
+                  <Link
+                    href={params ? `/solanized/${username}${option.link}` : "#"}
+                    key={optionKey}
+                  >
+                    <CommandItem
+                      className={cn(
+                        "flex gap-2 cursor-pointer",
+                        pathname() === option.link &&
+                          "border border-violet-500 bg-accent",
+                      )}
+                      key={optionKey}
+                    >
+                      {renderIcon(option.icon)}
+                      {option.text}
+                    </CommandItem>
+                  </Link>
+                ),
+              )}
+            </CommandGroup>
+          ))}
+        </CommandList>
+        <CommandSeparator />
+        <div className="p-2">
+          <div className="p-6 border border-gray-300 rounded-lg bg-gray-100 mt-4">
+            <Graph
+              graph={graphData}
+              options={graphOptions}
+              events={graphEvents}
+            />
+          </div>
         </div>
-      </div>
-    </Command>
+      </Command>
+      <ModalCreateSummary open={open} setOpen={setOpen} />
+    </>
   );
 }

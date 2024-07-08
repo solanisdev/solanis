@@ -1,5 +1,5 @@
 interface Props {}
-export default function Settings({}: Props) {
+export default function SettingsPage({}: Props) {
   return (
     <div>Settings</div>
   )

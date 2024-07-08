@@ -1,6 +1,6 @@
-import Editor from "@/components/Editor";
+import Dashboard from "@/components/Dashboard";
 
 interface Props {}
 export default function page({}: Props) {
-  return <Editor />;
+  return <Dashboard />;
 }

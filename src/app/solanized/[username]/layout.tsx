@@ -16,7 +16,7 @@ export default function Layout({ children, params }: LayoutProps) {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-[900px] h-screen w-full rounded-lg border"
+      className="min-h-[900px] h-screen w-full rounded-lg"
     >
       <ResizablePanel defaultSize={25} minSize={20}>
         <SolanisAvatar />

@@ -20,7 +20,7 @@ export default function SolanisAvatar({
 
   return (
     <div
-      className={`flex items-center gap-2 p-2 rounded-[16-px] ${hasBorder && "border"}`}
+      className={`flex items-center gap-2 p-2 ${hasBorder && "border border-r-0"}`}
     >
       <Image
         priority
@@ -28,9 +28,7 @@ export default function SolanisAvatar({
         alt="avatar"
         className={`avatar rounded-full ${sizeClass[size]}`}
       />
-      <div>
-        <p className="font-bold text-xl text-neutral-600">solanis</p>
-      </div>
+      <p className="font-bold text-xl text-neutral-600">solanis</p>
     </div>
   );
 }

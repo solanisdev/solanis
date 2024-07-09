@@ -1,5 +1,3 @@
-
-
 # Solanis - Create markdowns efficiently.
 
 Solanis is a cutting-edge AI generator designed to create markdowns efficiently. Powered by Solanis AI v1.0, this tool leverages advanced natural language processing capabilities to generate high-quality, well-structured markdown documents effortlessly.

@@ -20,7 +20,6 @@ export default function ModalCreateSummary({
   open,
   setOpen,
 }: ModalCreateSummaryProps) {
-  console.log(open);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>

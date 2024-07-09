@@ -125,13 +125,13 @@ type SidebarProps = {
 export default function Sidebar({ params }: SidebarProps) {
   const [graphEvents] = useState({});
   const username = params?.username;
-  const realPathname = usePathname();
 
   const pathname = useCallback(() => {
+    const pathName = usePathname();
     if (params && params.username) {
-      return realPathname.replace(`/solanized/${params.username}`, "");
+      return pathName.replace(`/solanized/${params.username}`, "");
     }
-    return realPathname;
+    return pathName;
   }, []);
 
   const [open, setOpen] = React.useState(false);
@@ -150,6 +150,7 @@ export default function Sidebar({ params }: SidebarProps) {
                       setOpen(true);
                     }}
                     className="w-full"
+                    key={optionKey}
                   >
                     <CommandItem
                       className={cn(

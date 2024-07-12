@@ -8,7 +8,7 @@ import {
   Plus,
   PlusIcon,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -33,8 +33,6 @@ type Widget = {
   static?: boolean;
 };
 
-const layouts = ["lg", "md", "sm", "xs", "xxs"];
-
 //TODO: Implement the rest of the widgets
 //TODO: Switch to components for each widget to make it easier to add new ones and calling api's
 //TODO: Add a way to save the dashboard
@@ -50,7 +48,7 @@ export default function Dashboard({}: Props) {
       minW: 2,
       minH: 2,
       maxH: 22,
-      static: true,
+      static: false,
     },
     {
       id: 2,
@@ -61,7 +59,7 @@ export default function Dashboard({}: Props) {
       minW: 2,
       minH: 2,
       maxH: 22,
-      static: true,
+      static: false,
     },
     {
       id: 3,
@@ -72,7 +70,7 @@ export default function Dashboard({}: Props) {
       minW: 2,
       minH: 2,
       maxH: 22,
-      static: true,
+      static: false,
     },
     {
       id: 4,
@@ -83,9 +81,10 @@ export default function Dashboard({}: Props) {
       minW: 2,
       minH: 2,
       maxH: 22,
-      static: true,
+      static: false,
     },
   ]);
+  const [layout, setLayout] = useState<string>("lg");
 
   const ResponsiveReactGridLayout = useMemo(
     () => WidthProvider(Responsive),
@@ -216,6 +215,19 @@ export default function Dashboard({}: Props) {
           width={1200}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
           cols={{ lg: 12, md: 12, sm: 12, xs: 6, xxs: 2 }}
+          onDragStop={(_layout: any, _oldItem: any, newItem: any) => {
+            const widget = widgets.find((w) => w.id === newItem.i);
+            const newWidget = {
+              ...widget,
+              ...newItem,
+            };
+            setWidgets((widgets) =>
+              widgets.map((w) => (w.id === newWidget.i ? newWidget : w)),
+            );
+          }}
+          onLayoutChange={(layout: any, layouts: any) => {
+            console.log(layout, layouts);
+          }}
         >
           {htmlWidgets}
         </ResponsiveReactGridLayout>

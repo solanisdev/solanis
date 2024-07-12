@@ -146,7 +146,6 @@ export default function Sidebar({ params }: SidebarProps) {
                 option.link === "/create-summary" ? (
                   <button
                     onClick={() => {
-                      console.log("click");
                       setOpen(true);
                     }}
                     className="w-full"

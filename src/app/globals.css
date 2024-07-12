@@ -3,66 +3,99 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-
-    --radius: 0.5rem;
+  /* THEME 1 https://zippystarter.com/tools/shadcn-ui-theme-generator */
+  /* :root {
+    --background: 250 100% 100%;
+    --foreground: 250 5% 10%;
+    --card: 250 50% 100%;
+    --card-foreground: 250 5% 15%;
+    --popover: 250 100% 100%;
+    --popover-foreground: 250 100% 10%;
+    --primary: 250 100% 72.7%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 250 30% 90%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 212 30% 95%;
+    --muted-foreground: 250 5% 40%;
+    --accent: 212 30% 90%;
+    --accent-foreground: 250 5% 15%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 250 5% 100%;
+    --border: 250 30% 82%;
+    --input: 250 30% 50%;
+    --ring: 250 100% 72.7%;
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 250 50% 10%;
+    --foreground: 250 5% 100%;
+    --card: 250 50% 10%;
+    --card-foreground: 250 5% 100%;
+    --popover: 250 50% 5%;
+    --popover-foreground: 250 5% 100%;
+    --primary: 250 100% 72.7%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 250 30% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 212 30% 25%;
+    --muted-foreground: 250 5% 65%;
+    --accent: 212 30% 25%;
+    --accent-foreground: 250 5% 95%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 250 5% 100%;
+    --border: 250 30% 50%;
+    --input: 250 30% 50%;
+    --ring: 250 100% 72.7%;
+    --radius: 0.75rem;
+  } */
 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+  /* THEME 2 ACTIVE? https://ui.jln.dev/*/
+  @layer base {
+    :root {
+      --background: 250 67% 99%;
+      --foreground: 250 64% 2%;
+      --muted: 250 5% 87%;
+      --muted-foreground: 250 7% 28%;
+      --popover: 250 67% 99%;
+      --popover-foreground: 250 64% 2%;
+      --card: 250 67% 99%;
+      --card-foreground: 250 64% 2%;
+      --border: 250 6% 89%;
+      --input: 250 6% 89%;
+      --primary: 250 100% 73%;
+      --primary-foreground: 0 0% 0%;
+      --secondary: 250 12% 80%;
+      --secondary-foreground: 250 12% 20%;
+      --accent: 250 22% 73%;
+      --accent-foreground: 250 22% 13%;
+      --destructive: 21 97% 24%;
+      --destructive-foreground: 21 97% 84%;
+      --ring: 250 100% 73%;
+      --radius: 0.5rem;
+    }
 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    .dark {
+      --background: 250 46% 1%;
+      --foreground: 250 10% 98%;
+      --muted: 250 5% 13%;
+      --muted-foreground: 250 7% 72%;
+      --popover: 250 46% 1%;
+      --popover-foreground: 250 10% 98%;
+      --card: 250 46% 1%;
+      --card-foreground: 250 10% 98%;
+      --border: 250 6% 10%;
+      --input: 250 6% 10%;
+      --primary: 250 100% 73%;
+      --primary-foreground: 0 0% 0%;
+      --secondary: 250 11% 20%;
+      --secondary-foreground: 250 11% 80%;
+      --accent: 250 19% 26%;
+      --accent-foreground: 250 19% 86%;
+      --destructive: 21 97% 56%;
+      --destructive-foreground: 0 0% 0%;
+      --ring: 250 100% 73%;
+    }
   }
 }
 
@@ -73,4 +106,14 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.no-visible-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-visible-scrollbar::-webkit-scrollbar {
+  display: none;
 }

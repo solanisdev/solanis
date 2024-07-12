@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import SolanisTransparent from "../../public/solanis-transparent.png";
+import { GradientHeading } from "@/components/ui/gradient-heading";
 
 interface SolanisAvatarProps {
   hasBorder?: boolean;
@@ -28,7 +29,9 @@ export default function SolanisAvatar({
         alt="avatar"
         className={`avatar rounded-full ${sizeClass[size]}`}
       />
-      <p className="font-bold text-xl text-neutral-600">solanis</p>
+      <GradientHeading variant={"default"} size={"xs"}>
+        solanis
+      </GradientHeading>
     </div>
   );
 }

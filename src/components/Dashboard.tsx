@@ -7,6 +7,7 @@ import {
   LucideTrash,
   Plus,
   PlusIcon,
+  Shapes,
 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import {
@@ -139,7 +140,7 @@ export default function Dashboard({}: Props) {
     );
   }, []);
 
-  const EditWidget = useCallback(() => {
+  const EmptyWidget = useCallback(() => {
     return (
       <div className="flex flex-row gap-2 items-center justify-center h-full">
         <Button variant="outline" className="h-min p-2">
@@ -156,7 +157,7 @@ export default function Dashboard({}: Props) {
       case "summary":
         return <SummaryWidget key={widget.id} widget={widget} />;
       case "empty":
-        return <EditWidget key={widget.id} />;
+        return <EmptyWidget key={widget.id} />;
       default:
         return <div key={widget.id}></div>;
     }
@@ -174,7 +175,7 @@ export default function Dashboard({}: Props) {
       <div
         key={widget.id}
         data-grid={dataGrid}
-        className="bg-white border border-black rounded-lg p-2"
+        className="bg-muted border border-muted-foreground rounded-lg p-2"
       >
         {chooseWidget(widget)}
       </div>
@@ -199,10 +200,7 @@ export default function Dashboard({}: Props) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem className="flex flex-row gap-2 justify-between cursor-pointer">
-              Nova Nota <LucideFileText size={14} />
-            </DropdownMenuItem>
-            <DropdownMenuItem className="flex flex-row gap-2 justify-between cursor-pointer">
-              Novo Resumo <LucideMessageSquareText size={14} />
+              Novo Widget <Shapes size={14}/>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

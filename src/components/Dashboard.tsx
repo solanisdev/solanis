@@ -24,7 +24,6 @@ type Widget = {
   minH: number;
   maxH: number;
   static?: boolean;
-  y: number;
 };
 
 //TODO: Implement the rest of the widgets
@@ -46,7 +45,6 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
-      y: 0,
     },
     {
       id: 2,
@@ -58,7 +56,6 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
-      y: 0,
     },
     {
       id: 3,
@@ -70,7 +67,6 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
-      y: 1,
     },
     {
       id: 4,
@@ -82,7 +78,6 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
-      y: 1,
     },
   ]);
 

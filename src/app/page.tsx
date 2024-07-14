@@ -41,50 +41,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const DEMO_MARKDOWN = `# Otimizando Seus Estudos com o App Solanis
-
-O App Solanis oferece diversas ferramentas e recursos para aprimorar seus estudos e te auxiliar na jornada do aprendizado. Para te ajudar a aproveitar ao máximo o potencial do aplicativo, preparamos este guia detalhado com dicas e sugestões práticas:
-
-### 1. Criação de Resumos Eficazes
-
-Organize suas ideias: Utilize a ferramenta de criação de listas para estruturar seus resumos de forma clara e concisa.
-Destaque os pontos-chave: Negrite, sublinhe ou utilize cores para destacar as informações mais importantes do texto.
-Insira imagens e diagramas: Visualize conceitos complexos com imagens e diagramas para facilitar a assimilação do conteúdo.
-Crie links para materiais complementares: Enriquecer seus resumos com links para outros recursos, como artigos, vídeos ou apresentações.
-
-### 2. Revisão Ativa e Eficaz
-
-Transforme textos em flashcards: Crie flashcards com perguntas e respostas a partir dos seus resumos para facilitar a revisão.
-Utilize o modo de teste: Teste seus conhecimentos com o modo de perguntas e respostas, otimizando sua memorização.
-Compartilhe seus resumos: Compartilhe seus resumos com colegas de estudo para promover debates e troca de conhecimentos.
-
-### 3. Planejamento e Organização
-
-Crie um cronograma de estudos: Utilize a ferramenta de calendário para organizar seus estudos e definir metas de aprendizado.
-Defina prazos e lembrete: Configure lembretes para te ajudar a cumprir seu cronograma e evitar atrasos.
-Acompanhe seu progresso: Monitore seu progresso visualmente usando gráficos e estatísticas.
-
-### 4. Aprendizagem Colaborativa
-
-Participe de grupos de estudo: Crie ou participe de grupos de estudo dentro do aplicativo para discutir conteúdos e trocar ideias.
-Compartilhe seus flashcards: Compartilhe seus flashcards com colegas para que todos possam se beneficiar do seu material de estudo.
-Ajude outros alunos: Responda perguntas e forneça feedback aos seus colegas, contribuindo para o aprendizado mútuo.
-
-### 5. Personalização e Flexibilidade
-
-Adapte a interface: Personalize a interface do aplicativo de acordo com suas preferências visuais e necessidades.
-Utilize diferentes modos de visualização: Explore os diferentes modos de visualização para encontrar o que melhor se adapta ao seu estilo de aprendizado.
-Sincronize seus dados: Sincronize seus dados entre diferentes dispositivos para ter acesso aos seus estudos em qualquer lugar.
-Lembre-se: O App Solanis é uma ferramenta poderosa que pode te auxiliar a otimizar seus estudos e alcançar seus objetivos de aprendizado. Explore todas as funcionalidades do aplicativo, personalize-o de acordo com suas necessidades e aproveite ao máximo o potencial que ele oferece para transformar sua jornada de estudos.
-
-Dicas Extras:
-
-Combine o App Solanis com outras ferramentas de estudo: Utilize outros recursos, como livros, vídeos e aulas online, para complementar seus estudos e ter uma visão mais abrangente do conteúdo.
-Crie um ambiente de estudo propício: Encontre um local tranquilo e livre de distrações para estudar com foco e concentração.
-Mantenha uma rotina de estudos consistente: Estude com regularidade e defina metas realistas para alcançar o sucesso.
-Com dedicação e disciplina, o App Solanis pode ser um aliado valioso na sua jornada de aprendizado. Utilize-o com sabedoria e aproveite ao máximo os recursos que ele oferece para alcançar seus objetivos de estudo!
-`;
-
 export default function Home() {
   const nodeRef = useRef(null);
   const username = "gustavorteuber";

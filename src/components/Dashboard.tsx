@@ -1,24 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  LucideFileText,
-  LucideMessageSquareText,
-  LucideTrash,
-  Plus,
-  PlusIcon,
-  Shapes,
-} from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { Plus, PlusIcon, Shapes } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
-import { Responsive, WidthProvider } from "react-grid-layout";
+import { GridStack } from "gridstack";
+import "gridstack/dist/gridstack.min.css";
 
 type Props = {};
 
@@ -32,11 +24,15 @@ type Widget = {
   minH: number;
   maxH: number;
   static?: boolean;
+  y: number;
 };
 
 //TODO: Implement the rest of the widgets
 //TODO: Switch to components for each widget to make it easier to add new ones and calling api's
 //TODO: Add a way to save the dashboard
+
+let grid: GridStack;
+
 export default function Dashboard({}: Props) {
   const name = "Gustavo";
   const [widgets, setWidgets] = useState<Widget[]>([
@@ -50,6 +46,7 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
+      y: 0,
     },
     {
       id: 2,
@@ -61,6 +58,7 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
+      y: 0,
     },
     {
       id: 3,
@@ -72,6 +70,7 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
+      y: 1,
     },
     {
       id: 4,
@@ -83,14 +82,15 @@ export default function Dashboard({}: Props) {
       minH: 2,
       maxH: 22,
       static: false,
+      y: 1,
     },
   ]);
-  const [layout, setLayout] = useState<string>("lg");
 
-  const ResponsiveReactGridLayout = useMemo(
-    () => WidthProvider(Responsive),
-    [],
-  );
+  const widgetsRef = useRef(new Map());
+
+  const getWidgetsMap = () => {
+    return widgetsRef.current;
+  };
 
   const addWidget = useCallback(
     (widget: Widget) => {
@@ -106,43 +106,9 @@ export default function Dashboard({}: Props) {
     [setWidgets],
   );
 
-  const changeType = useCallback(
-    (widget: Widget, type: string) => {
-      setWidgets((widgets) =>
-        widgets.map((w) => (w.id === widget.id ? { ...w, type } : w)),
-      );
-    },
-    [setWidgets],
-  );
-
-  const NoteWidget = useCallback(({ widget }: { widget: Widget }) => {
-    return (
-      <div className="flex flex-row gap-2 items-center">
-        <Button variant={"outline"} className="h-min p-2">
-          <LucideFileText size={14} />
-        </Button>
-        <div className="flex-1 text-sm font-bold">{widget.title}</div>
-      </div>
-    );
-  }, []);
-
-  const SummaryWidget = useCallback(({ widget }: { widget: Widget }) => {
-    return (
-      <div className="flex flex-row gap-2 items-center">
-        <Button variant={"outline"} className="h-min p-2">
-          <LucideMessageSquareText size={14} />
-        </Button>
-        <div className="flex-1 text-sm font-bold">{widget.title}</div>
-        <Button variant="destructive" className="h-min p-2">
-          <LucideTrash size={14} />
-        </Button>
-      </div>
-    );
-  }, []);
-
   const EmptyWidget = useCallback(() => {
     return (
-      <div className="flex flex-row gap-2 items-center justify-center h-full">
+      <div className="h-full w-full">
         <Button variant="outline" className="h-min p-2">
           <Plus size={14} />
         </Button>
@@ -152,10 +118,6 @@ export default function Dashboard({}: Props) {
 
   const chooseWidget = useCallback((widget: Widget) => {
     switch (widget.type) {
-      case "note":
-        return <NoteWidget key={widget.id} widget={widget} />;
-      case "summary":
-        return <SummaryWidget key={widget.id} widget={widget} />;
       case "empty":
         return <EmptyWidget key={widget.id} />;
       default:
@@ -163,28 +125,13 @@ export default function Dashboard({}: Props) {
     }
   }, []);
 
-  const htmlWidget = useCallback((widget: Widget, i: number) => {
-    const x = i > 0 ? widgets[i - 1].w : 0;
-    const dataGrid = {
-      x: x,
-      y: 0,
-      ...widget,
-    };
-
-    return (
-      <div
-        key={widget.id}
-        data-grid={dataGrid}
-        className="bg-muted border border-muted-foreground rounded-lg p-2"
-      >
-        {chooseWidget(widget)}
-      </div>
-    );
+  const HtmlWidget = useCallback((widget: Widget) => {
+    return chooseWidget(widget)
   }, []);
 
-  const htmlWidgets = useMemo(() => {
-    return widgets.map((widget, i) => htmlWidget(widget, i));
-  }, [widgets]);
+  useEffect(() => {
+    grid = GridStack.init({ margin: 4, row: 8 });
+  }, []);
 
   return (
     <>
@@ -200,35 +147,34 @@ export default function Dashboard({}: Props) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem className="flex flex-row gap-2 justify-between cursor-pointer">
-              Novo Widget <Shapes size={14}/>
+              Novo Widget <Shapes size={14} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       <div className="p-4 border border-gray-100 rounded-lg">
-        <ResponsiveReactGridLayout
-          className="layout"
-          maxRows={22}
-          rowHeight={11}
-          width={1200}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 12, md: 12, sm: 12, xs: 6, xxs: 2 }}
-          onDragStop={(_layout: any, _oldItem: any, newItem: any) => {
-            const widget = widgets.find((w) => w.id === newItem.i);
-            const newWidget = {
-              ...widget,
-              ...newItem,
-            };
-            setWidgets((widgets) =>
-              widgets.map((w) => (w.id === newWidget.i ? newWidget : w)),
-            );
-          }}
-          onLayoutChange={(layout: any, layouts: any) => {
-            console.log(layout, layouts);
-          }}
-        >
-          {htmlWidgets}
-        </ResponsiveReactGridLayout>
+        <div className="grid-stack">
+          {widgets.map((widg) => (
+            <div
+              className="grid-stack-item"
+              gs-id={widg.id}
+              gs-w={6}
+              gs-h={4}
+              key={widg.id}
+              gs-no-move={widg.static}
+              gs-no-resize={widg.static}
+              ref={(node) => {
+                const map = getWidgetsMap();
+                if (node) map.set(widg, node);
+                else map.delete(widg);
+              }}
+            >
+              <div className="grid-stack-item-content bg-muted border border-primary rounded-lg p-2">
+                <HtmlWidget {...widg} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

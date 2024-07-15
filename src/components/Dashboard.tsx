@@ -1,28 +1,40 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Plus, PlusIcon, Shapes } from "lucide-react";
+import {
+  BarChart,
+  FileStack,
+  Kanban,
+  LineChart,
+  PieChart,
+  PlusIcon,
+  Sparkles,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
-import { GridStack } from "gridstack";
+import { GridItemHTMLElement, GridStack, GridStackNode } from "gridstack";
 import "gridstack/dist/gridstack.min.css";
+import { EmptyWidget } from "./EmptyWidget";
 
 type Props = {};
 
 type Widget = {
-  id: number;
-  title: string;
+  id: number | string;
   type: string;
   h: number;
   w: number;
-  minW: number;
-  minH: number;
-  maxH: number;
   static?: boolean;
 };
 
@@ -31,53 +43,38 @@ type Widget = {
 //TODO: Add a way to save the dashboard
 
 let grid: GridStack;
+let count = 3;
 
 export default function Dashboard({}: Props) {
   const name = "Gustavo";
   const [widgets, setWidgets] = useState<Widget[]>([
     {
-      id: 1,
-      title: "",
+      id: 0,
       type: "empty",
-      h: 11,
+      h: 4,
       w: 6,
-      minW: 2,
-      minH: 2,
-      maxH: 22,
-      static: false,
+      static: true,
+    },
+    {
+      id: 1,
+      type: "empty",
+      h: 4,
+      w: 6,
+      static: true,
     },
     {
       id: 2,
-      title: "",
       type: "empty",
-      h: 11,
+      h: 4,
       w: 6,
-      minW: 2,
-      minH: 2,
-      maxH: 22,
-      static: false,
+      static: true,
     },
     {
       id: 3,
-      title: "",
       type: "empty",
-      h: 11,
+      h: 4,
       w: 6,
-      minW: 2,
-      minH: 2,
-      maxH: 22,
-      static: false,
-    },
-    {
-      id: 4,
-      title: "",
-      type: "empty",
-      h: 11,
-      w: 6,
-      minW: 2,
-      minH: 2,
-      maxH: 22,
-      static: false,
+      static: true,
     },
   ]);
 
@@ -87,85 +84,77 @@ export default function Dashboard({}: Props) {
     return widgetsRef.current;
   };
 
-  const addWidget = useCallback(
-    (widget: Widget) => {
-      setWidgets((widgets) => [...widgets, widget]);
-    },
-    [setWidgets],
-  );
+  const addWidget = () => {
+    count++;
 
-  const removeWidget = useCallback(
-    (widget: Widget) => {
-      setWidgets((widgets) => widgets.filter((w) => w.id !== widget.id));
-    },
-    [setWidgets],
-  );
+    const newWidget = {
+      id: count,
+      type: "empty",
+      h: 2,
+      w: 3,
+      static: true,
+    };
 
-  const EmptyWidget = useCallback(() => {
-    return (
-      <div className="h-full w-full">
-        <Button variant="outline" className="h-min p-2">
-          <Plus size={14} />
-        </Button>
-      </div>
-    );
-  }, []);
+    setWidgets([...widgets, newWidget]);
 
-  const chooseWidget = useCallback((widget: Widget) => {
-    switch (widget.type) {
-      case "empty":
-        return <EmptyWidget key={widget.id} />;
-      default:
-        return <div key={widget.id}></div>;
-    }
-  }, []);
+    setTimeout(() => {
+      console.log(getWidgetsMap().get(count));
+      grid.makeWidget(getWidgetsMap().get(count));
+    }, 5);
+  };
 
-  const HtmlWidget = useCallback((widget: Widget) => {
-    return chooseWidget(widget)
-  }, []);
+  const Widget = () => {
+    return <EmptyWidget disabled={true} addWidget={addWidget} />;
+  };
 
   useEffect(() => {
-    grid = GridStack.init({ margin: 4, row: 8 });
+    grid = GridStack.init({ margin: 6, row: 8 });
+
+    grid.on("dragstop", function (_event: Event, el: GridItemHTMLElement) {
+      if (!el.gridstackNode) {
+        throw new Error(`Error resizing element: ${el}`);
+      }
+
+      let node: GridStackNode = el.gridstackNode;
+      console.log(node);
+    });
+
+    grid.on("resizestop", function (event: Event, el: GridItemHTMLElement) {
+      if (!el.gridstackNode) {
+        throw new Error(`Error resizing element: ${el}`);
+      }
+
+      let node: GridStackNode = el.gridstackNode;
+      console.log(node);
+    });
   }, []);
 
   return (
     <>
       <div className="flex flex-row items-center justify-between pb-4">
         <p>
-          Bem vindo, <span className="font-bold">{name}</span> ao seu Dashboard!
+          Bem vindo <span className="font-bold">{name}</span>, ao seu Dashboard!
         </p>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant={"outline"} className="h-min p-2">
-              <PlusIcon size={14} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem className="flex flex-row gap-2 justify-between cursor-pointer">
-              Novo Widget <Shapes size={14} />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button onClick={addWidget}>Add</Button>
       </div>
       <div className="p-4 border border-gray-100 rounded-lg">
         <div className="grid-stack">
           {widgets.map((widg) => (
             <div
               className="grid-stack-item"
-              gs-id={widg.id}
-              gs-w={6}
-              gs-h={4}
+              gs-w={widg.w}
+              gs-h={widg.h}
+              gs-no-move={`${widg.static}`}
+              gs-no-resize={`${widg.static}`}
               key={widg.id}
-              gs-no-move={widg.static}
-              gs-no-resize={widg.static}
               ref={(node) => {
                 const map = getWidgetsMap();
-                if (node) map.set(widg, node);
+                if (node) map.set(widg.id, node);
                 else map.delete(widg);
               }}
             >
-              <div className="grid-stack-item-content bg-muted border border-primary rounded-lg p-2">
-                <HtmlWidget {...widg} />
+              <div className="grid-stack-item-content border border-opacity-25 rounded-lg p-2">
+                <Widget />
               </div>
             </div>
           ))}

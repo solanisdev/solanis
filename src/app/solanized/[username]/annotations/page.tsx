@@ -1,4 +1,5 @@
 import AnnotationList from "@/components/AnnotationList";
+import { GradientHeading } from "@/components/ui/gradient-heading";
 import React from "react";
 
 type Props = {};
@@ -6,10 +7,10 @@ type Props = {};
 export default function AnnotationsPage({}: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="m-auto min-w-[80%]">
-        <h1 className="text-2xl font-bold mb-4">Annotations</h1>
-        <AnnotationList />
-      </div>
+      <GradientHeading variant={"default"} size={"xs"}>
+        Anotações
+      </GradientHeading>
+      <AnnotationList />
     </div>
   );
 }

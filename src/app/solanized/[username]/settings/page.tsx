@@ -10,15 +10,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface Props {}
+type Props = {};
+
 export default function SettingsPage({}: Props) {
-  const tabs = [
-    {
-      title: "Theme",
-      value: "theme",
-      content: <div></div>,
-    },
-  ];
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2">
@@ -127,7 +121,8 @@ export default function SettingsPage({}: Props) {
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-bold">Sugestões de melhorias</p>
                   <p className="text-sm">
-                    Receba notificações push com sugestões de melhorias IA para seus documentos markdown.
+                    Receba notificações push com sugestões de melhorias IA para
+                    seus documentos markdown.
                   </p>
                 </div>
               </div>

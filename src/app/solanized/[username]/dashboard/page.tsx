@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { GridItemHTMLElement, GridStack, GridStackNode } from "gridstack";
 import "gridstack/dist/gridstack.min.css";
 import { v4 as uuidv4 } from "uuid";
@@ -58,13 +58,14 @@ export default function DashboardPage({}: Props) {
   };
 
   const createWidget = (type: string) => {
+    //todo: calculate the best position to add the widget and h w
     return {
       id: uuidv4(),
       type,
       h: 2,
-      w: 3,
+      w: 2,
       static: false,
-    } as Widget;
+    };
   };
 
   const addWidget = (type: string) => {
@@ -73,13 +74,12 @@ export default function DashboardPage({}: Props) {
     setWidgets([...widgets, newWidget]);
 
     setTimeout(() => {
-      console.log(getWidgetsMap().get(newWidget.id));
-      grid.makeWidget(getWidgetsMap().get(newWidget.id));
+      grid.addWidget(getWidgetsMap().get(newWidget.id))
     }, 5);
   };
 
   const Widget = (widget: Widget) => {
-    return <div>{widget.type} Type shi</div>;
+    return <div>{widget.type}</div>;
   };
 
   useEffect(() => {
@@ -107,7 +107,15 @@ export default function DashboardPage({}: Props) {
       }
 
       let node: GridStackNode = el.gridstackNode;
-      console.log(node);
+      setWidgets((prev) =>
+        prev.map((widg) => {
+          if (widg.id === node.id) {
+            const newWidg = { ...widg, w: node.w ?? 0, h: node.h ?? 0 };
+            return newWidg;
+          }
+          return widg;
+        }),
+      );
     });
   }, []);
 
@@ -183,6 +191,7 @@ export default function DashboardPage({}: Props) {
                 className="grid-stack-item"
                 gs-w={widg.w}
                 gs-h={widg.h}
+                gs-id={widg.id}
                 gs-no-move={`${widg.static}`}
                 gs-no-resize={`${widg.static}`}
                 key={widg.id}

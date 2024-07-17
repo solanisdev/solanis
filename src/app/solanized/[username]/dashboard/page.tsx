@@ -74,7 +74,7 @@ export default function DashboardPage({}: Props) {
     setWidgets([...widgets, newWidget]);
 
     setTimeout(() => {
-      grid.addWidget(getWidgetsMap().get(newWidget.id))
+      grid.addWidget(getWidgetsMap().get(newWidget.id));
     }, 5);
   };
 
@@ -83,7 +83,7 @@ export default function DashboardPage({}: Props) {
   };
 
   useEffect(() => {
-    grid = GridStack.init({ margin: 6, row: 8 });
+    grid = GridStack.init({ margin: 6, row: 8, styleInHead: true });
 
     grid.on("dragstop", function (_event: Event, el: GridItemHTMLElement) {
       if (!el.gridstackNode) {
@@ -183,8 +183,8 @@ export default function DashboardPage({}: Props) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="p-4 border border-gray-200 rounded-lg">
-        <div className="grid-stack">
+      <div className="p-4 border border-gray-200 rounded-lg max-h-[83vh]">
+        <div className="grid-stack max-h-[80vh]">
           {widgets.length > 0 ? (
             widgets.map((widg) => (
               <div

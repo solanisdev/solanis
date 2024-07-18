@@ -39,7 +39,6 @@
     "react-graph-vis": "^1.0.7",
     "react-resizable-panels": "^2.0.19",
     "react-simplemde-editor": "^5.2.0",
-    "react-type-animation": "^3.2.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0"

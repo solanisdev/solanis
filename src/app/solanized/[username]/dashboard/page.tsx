@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, useMemo } from "react";
-import { GridItemHTMLElement, GridStack, GridStackNode } from "gridstack";
+import {
+  GridItemHTMLElement,
+  GridStack,
+  GridStackNode,
+  GridStackWidget,
+} from "gridstack";
 import "gridstack/dist/gridstack.min.css";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -23,11 +28,15 @@ import {
   FileStack,
   Kanban,
   LineChart,
+  LucideX,
   PieChart,
   PlusIcon,
+  SaveIcon,
   Sparkles,
 } from "lucide-react";
 import { GradientHeading } from "@/components/ui/gradient-heading";
+import { cn } from "@/lib/utils";
+import { useIsFirstRender } from "@uidotdev/usehooks";
 
 interface Props {}
 
@@ -39,6 +48,7 @@ type Widget = {
   x?: number;
   y?: number;
   static?: boolean;
+  removed?: boolean;
 };
 
 //TODO: Implement the rest of the widgets
@@ -50,6 +60,7 @@ let grid: GridStack;
 export default function DashboardPage({}: Props) {
   const name = "Gustavo";
   const [widgets, setWidgets] = useState<Widget[]>([]);
+  const isFirstRender = useIsFirstRender();
 
   const widgetsRef = useRef(new Map());
 
@@ -78,8 +89,40 @@ export default function DashboardPage({}: Props) {
     }, 5);
   };
 
+  const removeWidget = (id: string) => {
+    const el = document.querySelector(
+      `.grid-stack-item[gs-id="${id}"]`,
+    ) as GridItemHTMLElement;
+    
+    //set removed
+    setWidgets((prev) =>
+      prev.map((widg) => {
+        if (widg.id === id) {
+          return { ...widg, removed: true };
+        }
+        return widg;
+      }),
+    );
+
+    if (el) {
+      grid.removeWidget(el);
+      widgetsRef.current.delete(id);
+    }
+  };
+
   const Widget = (widget: Widget) => {
-    return <div>{widget.type}</div>;
+    return (
+      <div>
+        {widget.type}
+        <Button
+          variant={"destructive"}
+          className="absolute top-1 right-1 p-1 h-min hidden group-hover:flex"
+          onClick={() => removeWidget(widget.id as string)}
+        >
+          <LucideX size={10} />
+        </Button>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -119,6 +162,14 @@ export default function DashboardPage({}: Props) {
     });
   }, []);
 
+  useEffect(() => {
+    if (isFirstRender) return;
+
+    const saved = grid.save(true) as GridStackWidget[];
+    setWidgets(saved.map((widg: any) => ({ ...widg, id: widg.id })));
+    console.log("salvou");
+  }, [widgets]);
+
   return (
     <>
       <div className="flex flex-row items-center justify-between pb-4">
@@ -128,7 +179,14 @@ export default function DashboardPage({}: Props) {
         </p>
         <DropdownMenu>
           <DropdownMenuTrigger asChild disabled={false}>
-            <Button variant={"outline"} className="h-min p-2">
+            <Button
+              variant={"outline"}
+              className={cn(
+                "h-min p-2",
+                widgets.length === 0 &&
+                  "animate-shine bg-gradient-to-r from-white via-primary/15 to-white bg-[length:400%_100%]",
+              )}
+            >
               <PlusIcon size={14} />
             </Button>
           </DropdownMenuTrigger>
@@ -188,7 +246,7 @@ export default function DashboardPage({}: Props) {
           {widgets.length > 0 ? (
             widgets.map((widg) => (
               <div
-                className="grid-stack-item"
+                className="grid-stack-item group"
                 gs-w={widg.w}
                 gs-h={widg.h}
                 gs-id={widg.id}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   GridItemHTMLElement,
   GridStack,
@@ -31,12 +31,10 @@ import {
   LucideX,
   PieChart,
   PlusIcon,
-  SaveIcon,
   Sparkles,
 } from "lucide-react";
 import { GradientHeading } from "@/components/ui/gradient-heading";
 import { cn } from "@/lib/utils";
-import { useIsFirstRender } from "@uidotdev/usehooks";
 
 interface Props {}
 
@@ -60,7 +58,6 @@ let grid: GridStack;
 export default function DashboardPage({}: Props) {
   const name = "Gustavo";
   const [widgets, setWidgets] = useState<Widget[]>([]);
-  const isFirstRender = useIsFirstRender();
 
   const widgetsRef = useRef(new Map());
 
@@ -163,8 +160,6 @@ export default function DashboardPage({}: Props) {
   }, []);
 
   useEffect(() => {
-    if (isFirstRender) return;
-
     const saved = grid.save(true) as GridStackWidget[];
     setWidgets(saved.map((widg: any) => ({ ...widg, id: widg.id })));
     console.log("salvou");

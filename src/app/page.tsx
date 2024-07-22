@@ -22,6 +22,8 @@ import { GradientText } from "@/components/ui/gradient-text";
 import { Skeleton } from "@/components/ui/skeleton";
 import { WordFadeIn } from "@/components/ui/word-fade-in";
 import SparklesText from "@/components/ui/sparkles-text";
+import { StaggeredFade } from "@/components/ui/staggered-fade";
+import { LinkPreview } from "@/components/ui/link-preview";
 
 export default function Home() {
   const bentoItems = [
@@ -89,24 +91,6 @@ export default function Home() {
       header: <Skeleton className="w-full h-full" />,
     },
   ];
-  const words = [
-    {
-      text: "Escreva",
-    },
-    {
-      text: "textos",
-    },
-    {
-      text: "incríveis",
-    },
-    {
-      text: "com",
-    },
-    {
-      text: "Solanis.",
-      className: "text-primary",
-    },
-  ];
 
   const username = "gustavorteuber";
 
@@ -126,7 +110,7 @@ export default function Home() {
               SUPORTE
             </Link>
           </div>
-          <Link href={`/solanized/${username}`}>
+          <Link href={`/login`}>
             <Button
               variant="ghost"
               className="flex justify-center gap-2 font-thin"
@@ -146,20 +130,21 @@ export default function Home() {
                   Solanis é um gerador de markdown de última geração, projetado
                   para criar markdowns com eficiência. <br /> <br />
                   Alimentado pela{" "}
-                  <SparklesText
-                    text="Solanis IA v1.0"
-                    colors={{ first: "#8c75ff", second: "#FFA500" }}
-                  />
-                  esta ferramenta utiliza recursos avançados de processamento
-                  de linguagem natural para gerar documentos markdown de alta
+                  <LinkPreview
+                    url="https://github.com/solanisdev"
+                    className="font-bold"
+                  >
+                    <SparklesText
+                      text="Solanis IA v1.0"
+                      colors={{ first: "#8c75ff", second: "#FFA500" }}
+                    />
+                  </LinkPreview>
+                  esta ferramenta utiliza recursos avançados de processamento de
+                  linguagem natural para gerar documentos markdown de alta
                   qualidade e bem estruturados, sem esforço.
                   <br />
                 </p>
-                <TypewriterEffectSmooth
-                  words={words}
-                  cursorClassName="bg-primary"
-                  className="text-xl"
-                />
+                <StaggeredFade text="Escreva textos incríveis com Solanis" />
                 <Button variant={"outline"}>Solanize-se agora</Button>
               </div>
               <div className="w-full overflow-hidden">
@@ -188,7 +173,7 @@ export default function Home() {
                 </ContainerScroll>
               </div>
             </div>
-            <BentoGrid className="mx-auto px-4 py-24 max-w-[120rem]">
+            <BentoGrid className="mx-auto px-4 py-24 max-w-6xl">
               {bentoItems.map((item, index) => (
                 <BentoGridItem
                   key={index}

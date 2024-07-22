@@ -11,6 +11,18 @@ const nextConfig = {
       },
     ];
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/solanized/:path*",
+        destination: "/solanized/:path*/dashboard",
+        permanent: true,
+      },
+    ];
+  },
+  images: {
+    domains: ['api.microlink.io'],
+  },
   transpilePackages: ["lucide-react"],
 };
 

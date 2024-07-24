@@ -1,5 +1,4 @@
 import { GradientHeading } from "@/components/ui/gradient-heading";
-import { GradientText } from "@/components/ui/gradient-text";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";

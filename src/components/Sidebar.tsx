@@ -22,7 +22,6 @@ import React, { useCallback, useState } from "react";
 import { usePathname } from "next/navigation";
 import Graph from "react-graph-vis";
 import { cn } from "@/lib/utils";
-import { atom, useAtom } from "jotai";
 import ModalCreateSummary from "@/components/ModalCreateSummary";
 
 type MenuItem = {
@@ -155,7 +154,7 @@ export default function Sidebar({ params }: SidebarProps) {
                       className={cn(
                         "flex gap-2 cursor-pointer",
                         pathname() === option.link &&
-                          "border border-violet-500 bg-accent",
+                          "border border-primary bg-accent",
                       )}
                       key={optionKey}
                     >
@@ -172,7 +171,7 @@ export default function Sidebar({ params }: SidebarProps) {
                       className={cn(
                         "flex gap-2 cursor-pointer",
                         pathname() === option.link &&
-                          "border border-violet-500 bg-accent",
+                          "border border-primary bg-accent",
                       )}
                       key={optionKey}
                     >

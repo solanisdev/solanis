@@ -12,9 +12,9 @@ export default function AnnotationList({}: Props) {
   const [annotations, setAnnotations] = React.useState<AnnotationT[]>([]);
   const icon = "box" as keyof typeof dynamicIconImports;
 
-  const renderButtonCreateAnnotation = () => {
+  const ButtonCreateAnnotation = () => {
     return (
-      <div className="flex flex-row items-center gap-2 h-8 hover:bg-gray-50 rounded-md px-1 cursor-pointer text-gray-500">
+      <div className="flex flex-row items-center gap-2 h-8 hover:bg-muted rounded-md px-1 cursor-pointer text-gray-500">
         <Plus size={18} />
         <p>Criar nova anotação</p>
       </div>
@@ -35,7 +35,7 @@ export default function AnnotationList({}: Props) {
           />
         ))}
       </div>
-      {renderButtonCreateAnnotation()}
+      <ButtonCreateAnnotation />
     </>
   );
 }

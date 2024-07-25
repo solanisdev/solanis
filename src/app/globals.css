@@ -50,8 +50,8 @@
     --radius: 0.75rem;
   } */
 
-  /* THEME 2 ACTIVE? https://ui.jln.dev/*/
-  @layer base {
+  /* THEME 2 UNNACTIVE https://ui.jln.dev/*/
+  /* @layer base {
     :root {
       --background: 250 67% 99%;
       --foreground: 250 64% 2%;
@@ -96,7 +96,55 @@
       --destructive-foreground: 0 0% 0%;
       --ring: 250 100% 73%;
     }
-  }
+  } */
+  
+  @layer base {
+      :root {
+        --background: 44 57% 98%;
+        --foreground: 44 70% 4%;
+        --muted: 44 8% 95%;
+        --muted-foreground: 44 6% 36%;
+        --popover: 44 57% 98%;
+        --popover-foreground: 44 70% 4%;
+        --card: 44 57% 98%;
+        --card-foreground: 44 70% 4%;
+        --border: 44 8% 88%;
+        --input: 44 8% 88%;
+        --primary: 44 100% 77%;
+        --primary-foreground: 44 100% 17%;
+        --secondary: 44 19% 87%;
+        --secondary-foreground: 44 19% 27%;
+        --accent: 44 27% 78%;
+        --accent-foreground: 44 27% 18%;
+        --destructive: 2 83% 24%;
+        --destructive-foreground: 2 83% 84%;
+        --ring: 44 100% 77%;
+        --radius: 0.5rem;
+      }
+    
+      .dark {
+        --background: 44 35% 1%;
+        --foreground: 44 39% 98%;
+        --muted: 44 8% 5%;
+        --muted-foreground: 44 6% 64%;
+        --popover: 44 35% 1%;
+        --popover-foreground: 44 39% 98%;
+        --card: 44 35% 1%;
+        --card-foreground: 44 39% 98%;
+        --border: 44 8% 13%;
+        --input: 44 8% 13%;
+        --primary: 44 100% 77%;
+        --primary-foreground: 44 100% 17%;
+        --secondary: 44 8% 19%;
+        --secondary-foreground: 44 8% 79%;
+        --accent: 44 15% 29%;
+        --accent-foreground: 44 15% 89%;
+        --destructive: 2 83% 55%;
+        --destructive-foreground: 0 0% 100%;
+        --ring: 44 100% 77%;
+      }
+    }
+    
 }
 
 @layer base {

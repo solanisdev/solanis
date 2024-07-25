@@ -161,7 +161,7 @@ export default function Dashboard({}: Props) {
 
   useEffect(() => {
     const saved = grid.save(true) as GridStackWidget[];
-    setWidgets(saved.map((widg: any) => ({ ...widg, id: widg.id })));
+    // setWidgets(saved.map((widg: any) => ({ ...widg, id: widg.id })));
     console.log("salvou");
   }, [widgets]);
 
@@ -179,7 +179,7 @@ export default function Dashboard({}: Props) {
               className={cn(
                 "h-min p-2",
                 widgets.length === 0 &&
-                  "animate-shine bg-gradient-to-r from-white via-primary/15 to-white bg-[length:400%_100%]",
+                  "animate-shine bg-gradient-to-r from-primary/50 via-accent-foreground/15 to-secondary/50 dark:from-primary/50 dark:via-primary-foreground/15 dark:to-primary/50 bg-[length:400%_100%]",
               )}
             >
               <PlusIcon size={14} />

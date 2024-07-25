@@ -24,6 +24,7 @@ import { WordFadeIn } from "@/components/ui/word-fade-in";
 import SparklesText from "@/components/ui/sparkles-text";
 import { StaggeredFade } from "@/components/ui/staggered-fade";
 import { LinkPreview } from "@/components/ui/link-preview";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const bentoItems = [
@@ -184,32 +185,7 @@ export default function Home() {
             </BentoGrid>
           </div>
         </main>
-        <footer className="pt-28 pb-20 border-t">
-          <div className="flex flex-col justify-center gap-16 px-4">
-            <p className="text-7xl text-500 font-thin">Domine seus estudos.</p>
-            <div className="flex flex-row items-center gap-4">
-              <p className="text-sm font-thin w-full">© Solanis Team</p>
-              <div className="flex gap-4">
-                <a
-                  href="https://github.com/solanisdev/solanis"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-thin hover:text-gray-600 text-sm"
-                >
-                  Github
-                </a>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-thin hover:text-gray-600 text-sm"
-                >
-                  Discord
-                </a>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

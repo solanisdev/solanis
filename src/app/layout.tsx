@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${helvetica_neue.variable} ${inter.className} h-screen`}
+        className={`${helvetica_neue.variable} ${inter.className} bg-background h-screen`}
       >
         <EditorProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>

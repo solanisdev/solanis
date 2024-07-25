@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <div className="flex flex-col items-start gap-4">
           <Link href="#" className="flex items-center gap-2" prefetch={false}>
-            <span className="font-semibold text-lg">Markdown AI</span>
+            <span className="font-semibold text-lg">Solanis</span>
           </Link>
           <p className="text-muted-foreground text-sm">
             An AI-powered markdown generator to help you create beautiful

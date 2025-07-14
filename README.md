@@ -9,7 +9,7 @@ Solanis by right now is in Alpha and if you wan't to help us, you can use Git or
 ### Authors
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
+    <a href="https://github.com/solanisdev/solanis">
         <img src="https://contrib.rocks/image?repo=solanisdev/solanis" />
     </a>
 </div>
